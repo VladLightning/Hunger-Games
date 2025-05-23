@@ -18,11 +18,12 @@ public class CubeSpawner : MonoBehaviour
     {
         var random = new System.Random();
         var takenSpawnPoints = Enumerable.Range(0, _spawnPoints.Length).OrderBy(x => random.Next()).Take(_colors.Length).ToList();
-
-        foreach (var spawnPoint in takenSpawnPoints)
+        
+        for(int i = 0; i < takenSpawnPoints.Count; i++)
         {
             yield return new WaitForSeconds(_spawnDelay);
-            Instantiate(_cubePrefab, _spawnPoints[spawnPoint].position, Quaternion.identity);
+            var renderer = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation).GetComponent<Renderer>();
+            renderer.material = _colors[i];
         }
     }
 }

@@ -1,12 +1,9 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
-public class CubeSpawner : MonoBehaviour
+public class CubeSpawner : Spawner
 {
-    private readonly float _spawnDelay = 0.5f;
     [SerializeField] private GameObject _cubePrefab;
-    [SerializeField] private Transform[] _spawnPoints;
     [SerializeField] private Material[] _colors;
     
     private void Start()
@@ -16,8 +13,7 @@ public class CubeSpawner : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        var random = new System.Random();
-        var takenSpawnPoints = Enumerable.Range(0, _spawnPoints.Length).OrderBy(x => random.Next()).Take(_colors.Length).ToList();
+        var takenSpawnPoints = RandomizeTakenSpawnPoints(_colors.Length);
         
         for(int i = 0; i < takenSpawnPoints.Count; i++)
         {

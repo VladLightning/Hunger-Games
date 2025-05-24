@@ -29,12 +29,12 @@ public class BoosterSpawner : Spawner
     {
         int totalWeight = _boosters.Values.Sum();
         int roll = Random.Range(0, totalWeight);
-        int cumulative = 0;
+        int compareWeightCounter = 0;
 
         foreach (var item in _boosters)
         {
-            cumulative += item.Value;
-            if (cumulative >= roll)
+            compareWeightCounter += item.Value;
+            if (compareWeightCounter >= roll)
             {
                 return item.Key;
             }

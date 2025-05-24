@@ -7,7 +7,6 @@ public class BoosterSpawner : Spawner
 {
     [SerializeField] private SerializedDictionary<GameObject, int> _boosters;
     
-    [SerializeField] private int _maxSameTypeBoosterAmount;
     [SerializeField] private int _boostersToSpawnAmount;
 
     private void Start()

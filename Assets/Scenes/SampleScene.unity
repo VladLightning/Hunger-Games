@@ -4041,7 +4041,6 @@ MonoBehaviour:
       Value: 30
     - Key: {fileID: 7983663649950436102, guid: 211bc771e5ecd264fb3c74d757d966e4, type: 3}
       Value: 25
-  _maxSameTypeBoosterAmount: 3
   _boostersToSpawnAmount: 10
 --- !u!4 &1389434081
 Transform:
@@ -5091,7 +5090,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &1682041199
 MeshCollider:

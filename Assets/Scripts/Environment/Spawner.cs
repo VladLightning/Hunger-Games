@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Spawner : MonoBehaviour
 {
-    protected readonly float _spawnDelay = 0.5f;
+    [SerializeField] protected float _spawnDelay = 0.5f;
     [SerializeField] protected Transform[] _spawnPoints;
     
     protected List<int> RandomizeTakenSpawnPoints(int amountToTake)

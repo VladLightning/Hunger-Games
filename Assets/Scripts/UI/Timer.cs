@@ -12,6 +12,11 @@ public class Timer : MonoBehaviour
     private void Awake()
     {
         _timerView = GetComponent<TimerView>();
+    }
+
+    public void StartTimerCounter()
+    {
+        _timerView.TimerDisplaySetActive(true);
         _timer = StartCoroutine(TimerCounter());
     }
 

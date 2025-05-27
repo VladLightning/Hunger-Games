@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,8 +5,6 @@ public class Movement : MonoBehaviour
 {
     private readonly int _radius = 100;
     [SerializeField] private LayerMask _layerMask;
-    
-    private Timer _timer;
     
     private NavMeshAgent _agent;
     private NavMeshPath _path;
@@ -17,7 +14,6 @@ public class Movement : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _path = new NavMeshPath();
-        StartCoroutine(WaitForTimer());
     }
 
     private Transform FindTarget()
@@ -53,14 +49,8 @@ public class Movement : MonoBehaviour
         return length;
     }
     
-    private IEnumerator WaitForTimer()
+    public void StartMoving()
     {
-        yield return _timer.WaitTimer;
         _agent.SetDestination(FindTarget().position);
-    }
-
-    public void SetTimer(Timer timer)
-    {
-        _timer = timer;
     }
 }

@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
 {
+    public static event Action OnEndSpawn;
+    
     [SerializeField] private GameObject _cubePrefab;
     [SerializeField] private Material[] _colors;
     
@@ -18,8 +21,12 @@ public class CubeSpawner : Spawner
         for(int i = 0; i < takenSpawnPoints.Count; i++)
         {
             yield return new WaitForSeconds(_spawnDelay);
-            var renderer = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation).GetComponent<Renderer>();
+            var cube = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation);
+            
+            var renderer = cube.GetComponent<Renderer>();
             renderer.material = _colors[i];
         }
+        
+        OnEndSpawn?.Invoke();
     }
 }

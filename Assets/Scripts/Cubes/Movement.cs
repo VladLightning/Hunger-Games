@@ -10,11 +10,20 @@ public class Movement : MonoBehaviour
     private NavMeshPath _path;
     private Transform _currentTarget;
 
+    private void OnEnable()
+    {
+        RoundSystem.OnRoundStart += StartMoving;
+    }
+
+    private void OnDisable()
+    {
+        RoundSystem.OnRoundStart -= StartMoving;
+    }
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _path = new NavMeshPath();
-        _agent.SetDestination(FindTarget().position);
     }
 
     private Transform FindTarget()
@@ -48,5 +57,10 @@ public class Movement : MonoBehaviour
             length += Vector3.Distance(path.corners[i], path.corners[i + 1]);
         }
         return length;
+    }
+    
+    private void StartMoving()
+    {
+        _agent.SetDestination(FindTarget().position);
     }
 }

@@ -25,8 +25,7 @@ public class RoundSystem : MonoBehaviour
 
     private IEnumerator RoundStart()
     {
-        _timerPresenter.StartTimerCounter();
-        yield return _timerPresenter.WaitTimer;
+        yield return StartCoroutine(_timerPresenter.TimerCounter());
         OnRoundStart?.Invoke();
     }
 }

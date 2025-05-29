@@ -1,26 +1,32 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RoundSystem : MonoBehaviour
 {
-    [SerializeField] private Timer _timer;
-    private List<Movement> _movements;
+    public static event Action OnRoundStart;
     
-    public void StartRound(List<Movement> movements)
+    [SerializeField] private TimerPresenter _timerPresenter;
+
+    private void OnEnable()
     {
-        _movements = movements;
+        CubeSpawner.OnEndSpawn += StartRound;
+    }
+
+    private void OnDisable()
+    {
+        CubeSpawner.OnEndSpawn -= StartRound;
+    }
+
+    private void StartRound()
+    {
         StartCoroutine(RoundStart());
     }
 
     private IEnumerator RoundStart()
     {
-        _timer.StartTimerCounter();
-        yield return _timer.WaitTimer;
-
-        foreach (var movement in _movements)
-        {
-            movement.StartMoving();
-        }
+        _timerPresenter.StartTimerCounter();
+        yield return _timerPresenter.WaitTimer;
+        OnRoundStart?.Invoke();
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+public class TimerPresenter : MonoBehaviour
 {
     [SerializeField] private float _timerDuration;
     private TimerView _timerView;

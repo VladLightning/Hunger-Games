@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,16 @@ public class Movement : MonoBehaviour
     private NavMeshAgent _agent;
     private NavMeshPath _path;
     private Transform _currentTarget;
+
+    private void OnEnable()
+    {
+        RoundSystem.OnRoundStart += StartMoving;
+    }
+
+    private void OnDisable()
+    {
+        RoundSystem.OnRoundStart -= StartMoving;
+    }
 
     private void Start()
     {
@@ -49,7 +60,7 @@ public class Movement : MonoBehaviour
         return length;
     }
     
-    public void StartMoving()
+    private void StartMoving()
     {
         _agent.SetDestination(FindTarget().position);
     }

@@ -1,15 +1,13 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
 {
+    public static event Action OnEndSpawn;
+    
     [SerializeField] private GameObject _cubePrefab;
     [SerializeField] private Material[] _colors;
-    [SerializeField] private RoundSystem _roundSystem;
-
-    private List<Movement> _cubesMovements = new List<Movement>();
-    public List<Movement> CubesMovements => _cubesMovements;
     
     private void Start()
     {
@@ -27,10 +25,8 @@ public class CubeSpawner : Spawner
             
             var renderer = cube.GetComponent<Renderer>();
             renderer.material = _colors[i];
-            
-            _cubesMovements.Add(cube.GetComponent<Movement>());
         }
         
-        _roundSystem.StartRound(_cubesMovements);
+        OnEndSpawn?.Invoke();
     }
 }

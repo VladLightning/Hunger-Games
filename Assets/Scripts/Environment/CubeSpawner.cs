@@ -21,10 +21,9 @@ public class CubeSpawner : Spawner
         for(int i = 0; i < takenSpawnPoints.Count; i++)
         {
             yield return new WaitForSeconds(_spawnDelay);
-            var cube = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation);
+            var cube = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation).GetComponent<Cube>();
             
-            var renderer = cube.GetComponent<Renderer>();
-            renderer.material = _colors[i];
+            cube.Initialize(_colors[i], i+1);
         }
         
         OnEndSpawn?.Invoke();

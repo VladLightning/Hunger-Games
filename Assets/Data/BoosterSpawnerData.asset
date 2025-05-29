@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb30e6d703be9b47b40116082f0d041, type: 3}
+  m_Name: BoosterSpawnerData
+  m_EditorClassIdentifier: 
+  _spawnDelay: 0
+  _boosters:
+    _serializedList:
+    - Key: {fileID: 7983663649950436102, guid: ed198009792bcba4791451697a2cba48, type: 3}
+      Value: 3
+    - Key: {fileID: 7983663649950436102, guid: 211bc771e5ecd264fb3c74d757d966e4, type: 3}
+      Value: 10
+    - Key: {fileID: 7983663649950436102, guid: 7f6d1a91cb4a8a44d9e312bf376ff78c, type: 3}
+      Value: 20
+    - Key: {fileID: 7983663649950436102, guid: 91cb543c5ea65ba428e40a8c22c74e47, type: 3}
+      Value: 20
+    - Key: {fileID: 7983663649950436102, guid: f1e2ba9ae038e334c819689711a2bd4c, type: 3}
+      Value: 15
+  _boostersToSpawn: 10

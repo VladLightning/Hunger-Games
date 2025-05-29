@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class TimerPresenter : MonoBehaviour
 {
-    [SerializeField] private float _timerDuration;
+    [SerializeField] private TimerData _timerData;
     [SerializeField] private TimerView _timerView;
-
+    
+    private float _timerDuration;
+    
+    private void Initialize()
+    {
+        _timerDuration = _timerData.TimerDuration;
+    }
+    
+    private void Start()
+    {
+        Initialize();
+    }
+    
     public IEnumerator TimerCounter()
     {
         _timerView.TimerDisplaySetActive(true);

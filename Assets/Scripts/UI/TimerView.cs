@@ -12,7 +12,7 @@ public class TimerView : MonoBehaviour
 
     public void TimerDisplaySetActive(bool value)
     {
-        _timerDisplay.gameObject.SetActive(value);
+        gameObject.SetActive(value);
     }
     
     public void UpdateTimerDisplay(float seconds)

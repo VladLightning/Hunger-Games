@@ -4,12 +4,7 @@ using UnityEngine;
 public class TimerPresenter : MonoBehaviour
 {
     [SerializeField] private float _timerDuration;
-    private TimerView _timerView;
-    
-    private void Awake()
-    {
-        _timerView = GetComponent<TimerView>();
-    }
+    [SerializeField] private TimerView _timerView;
 
     public IEnumerator TimerCounter()
     {

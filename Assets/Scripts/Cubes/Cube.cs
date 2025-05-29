@@ -1,7 +1,8 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Movement : MonoBehaviour
+public class Cube : MonoBehaviour
 {
     private readonly int _radius = 100;
     [SerializeField] private LayerMask _layerMask;
@@ -20,6 +21,12 @@ public class Movement : MonoBehaviour
         RoundSystem.OnRoundStart -= StartMoving;
     }
 
+    public void Initialize(Material material, int number)
+    {
+        GetComponent<Renderer>().material = material;
+        GetComponentInChildren<TMP_Text>().text = number.ToString();
+    }
+    
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();

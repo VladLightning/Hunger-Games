@@ -5,7 +5,7 @@ public class TimerView : MonoBehaviour
 {
     private TMP_Text _timerDisplay;
 
-    private void Start()
+    private void Awake()
     {
         _timerDisplay = GetComponent<TMP_Text>();
     }

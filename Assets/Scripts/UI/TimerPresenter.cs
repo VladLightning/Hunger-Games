@@ -11,9 +11,9 @@ public class TimerPresenter : MonoBehaviour
         _timerView.TimerDisplaySetActive(true);
         while (_timerDuration > 0)
         {
-            yield return new WaitForFixedUpdate();
-            _timerDuration -= Time.deltaTime;
             _timerView.UpdateTimerDisplay(_timerDuration);
+            _timerDuration -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
         _timerView.TimerDisplaySetActive(false);
     }

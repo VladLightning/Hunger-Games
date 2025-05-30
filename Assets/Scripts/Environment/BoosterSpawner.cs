@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class BoosterSpawner : Spawner
 {
-    [SerializeField] private SerializedDictionary<GameObject, int> _boosters;
-    
-    [SerializeField] private int _boostersToSpawnAmount;
+    private SerializedDictionary<GameObject, int> _boosters;
+    private int _boostersToSpawnAmount;
 
+    protected override void Initialize()
+    {
+        base.Initialize();
+        
+        var boosterSpawnerData = _spawnerData as BoosterSpawnerData;
+        
+        _boosters = boosterSpawnerData.Boosters;
+        _boostersToSpawnAmount = boosterSpawnerData.BoostersToSpawn;
+    }
+    
     private void Start()
     {
         StartCoroutine(Spawn());

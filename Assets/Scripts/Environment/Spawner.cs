@@ -5,9 +5,19 @@ using UnityEngine;
 
 public abstract class Spawner : MonoBehaviour
 {
-    [SerializeField] protected float _spawnDelay = 0.5f;
+    [SerializeField] protected SpawnerData _spawnerData;
     [SerializeField] protected Transform[] _spawnPoints;
+    protected float _spawnDelay;
+    protected virtual void Initialize()
+    {
+        _spawnDelay = _spawnerData.SpawnDelay;
+    }
     
+    private void Awake()
+    {
+        Initialize();
+    }
+
     protected List<int> RandomizeTakenSpawnPoints(int amountToTake)
     {
         var random = new System.Random();

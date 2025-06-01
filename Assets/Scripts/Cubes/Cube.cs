@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,6 +12,8 @@ public class Cube : MonoBehaviour
     private NavMeshPath _path;
     private Transform _currentTarget;
 
+    private int _boostersPickedUp;
+
     private void OnEnable()
     {
         RoundSystem.OnRoundStart += StartMoving;
@@ -19,6 +22,15 @@ public class Cube : MonoBehaviour
     private void OnDisable()
     {
         RoundSystem.OnRoundStart -= StartMoving;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Booster"))
+        {
+            other.GetComponent<Booster>().ApplyBooster();
+            _boostersPickedUp++;
+        }
     }
 
     public void Initialize(Material material, int number)
@@ -38,7 +50,7 @@ public class Cube : MonoBehaviour
         var colliders = Physics.OverlapSphere(transform.position, _radius, _layerMask);
         float shortestDistance = Mathf.Infinity;
         Transform closestTarget = null;
-
+        
         foreach (var collider in colliders)
         {
             if (NavMesh.CalculatePath(transform.position, collider.transform.position, NavMesh.AllAreas, _path))
@@ -68,6 +80,32 @@ public class Cube : MonoBehaviour
     
     private void StartMoving()
     {
-        _agent.SetDestination(FindTarget().position);
+        StartCoroutine(Move());
+    }
+
+    private IEnumerator Move()
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+            
+            if (_currentTarget != null)
+            {
+                continue;
+            }
+            //Две задержки для того, чтобы raycast не смог сработать раньше уничтожения бустера
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+            
+            _currentTarget = FindTarget();
+            
+            if (_currentTarget == null)
+            {
+                _agent.isStopped = true;
+                yield break;
+            }
+            
+            _agent.SetDestination(_currentTarget.position);
+        }
     }
 }

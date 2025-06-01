@@ -16,7 +16,3 @@ MonoBehaviour:
   _cubePrefab: {fileID: 1547424366147875405, guid: 46494602172615441ab7885b3a30f868, type: 3}
   _materials:
   - {fileID: 2100000, guid: 8d850a1f42a7a2f469d270cad3bae2b4, type: 2}
-  - {fileID: 2100000, guid: 6a1d80c0a1c9d7a45bfd6b73d5c56537, type: 2}
-  - {fileID: 2100000, guid: a637c98b4e0015344ab4600fefb043d2, type: 2}
-  - {fileID: 2100000, guid: 3fb01eb9633519d49a95a1ab8323b558, type: 2}
-  - {fileID: 2100000, guid: 6e050c1f0859fbc478b2a8281dcbf564, type: 2}

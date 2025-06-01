@@ -14,8 +14,6 @@ public class Cube : MonoBehaviour
 
     private int _boostersPickedUp;
 
-    private bool _isRoundStarted;
-
     private void OnEnable()
     {
         RoundSystem.OnRoundStart += StartMoving;

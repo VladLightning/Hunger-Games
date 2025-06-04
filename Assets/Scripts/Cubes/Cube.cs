@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.AI;
 
 public class Cube : MonoBehaviour
 {
+    public static event Action<Color, int> OnJoinLeaderboard;
+    public static event Action<Color, int> OnBoosterPickedUp;
+    
     private readonly int _radius = 100;
     [SerializeField] private LayerMask _layerMask;
     
@@ -12,6 +16,7 @@ public class Cube : MonoBehaviour
     private NavMeshPath _path;
     private Transform _currentTarget;
 
+    private Color _ownColor;
     private int _boostersPickedUp;
 
     private void OnEnable()
@@ -30,6 +35,7 @@ public class Cube : MonoBehaviour
         {
             other.GetComponent<Booster>().ApplyBooster();
             _boostersPickedUp++;
+            OnBoosterPickedUp?.Invoke(_ownColor, _boostersPickedUp);
         }
     }
 
@@ -37,12 +43,15 @@ public class Cube : MonoBehaviour
     {
         GetComponent<Renderer>().material = material;
         GetComponentInChildren<TMP_Text>().text = number.ToString();
+        _ownColor = material.color;
     }
     
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _path = new NavMeshPath();
+        
+        OnJoinLeaderboard?.Invoke(_ownColor, _boostersPickedUp);
     }
 
     private Transform FindTarget()

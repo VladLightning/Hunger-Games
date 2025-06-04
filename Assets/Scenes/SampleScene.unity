@@ -5314,8 +5314,6 @@ MonoBehaviour:
   _leaderboardView: {fileID: 1588368322}
   _leaderboardDisplay: {fileID: 1963767584}
   _leaderboardText: {fileID: 2412416267498957343, guid: 2df04dc43fdf6c242ba50449a7001cf8, type: 3}
-  _leaderboardElements:
-    _serializedList: []
 --- !u!114 &1588368322
 MonoBehaviour:
   m_ObjectHideFlags: 0

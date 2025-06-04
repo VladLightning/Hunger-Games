@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using System.Linq;
-using AYellowpaper.SerializedCollections;
 using TMPro;
 using UnityEngine;
 
@@ -8,10 +8,10 @@ public class LeaderboardPresenter : MonoBehaviour
     [SerializeField] private LeaderboardView _leaderboardView;
     
     [SerializeField] private Transform _leaderboardDisplay;
-    [SerializeField] private TMP_Text _leaderboardText;
+    [SerializeField] private TMP_Text _leaderboardTextPrefab;
     
-    private SerializedDictionary<Color, int> _leaderboardElements = new SerializedDictionary<Color, int>();
-    private SerializedDictionary<Color, TMP_Text> _leaderboardElementsText = new SerializedDictionary<Color, TMP_Text>();
+    private Dictionary<Color, int> _leaderboardElements = new Dictionary<Color, int>();
+    private Dictionary<Color, TMP_Text> _leaderboardElementsText = new Dictionary<Color, TMP_Text>();
 
     private void OnEnable()
     {
@@ -29,7 +29,7 @@ public class LeaderboardPresenter : MonoBehaviour
     {
         _leaderboardElements.Add(color, value);
         
-        var text = Instantiate(_leaderboardText, _leaderboardDisplay);
+        var text = Instantiate(_leaderboardTextPrefab, _leaderboardDisplay);
         _leaderboardElementsText.Add(color, text);
         
         _leaderboardView.UpdateLeaderboardDisplay(_leaderboardElementsText[color], color, value);

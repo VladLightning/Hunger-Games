@@ -18,6 +18,7 @@ public class LeaderboardView : MonoBehaviour
 
     private string GetColorName(Color color)
     {
+        //Color value discrepancy approximation in colors that are not absolute values of 0 or 1 on RGBA 0.0 -> 1.0 scale
         foreach (var kvp in _colorNames.Where(kvp => Mathf.Approximately(kvp.Key.r, color.r) && 
                                                      Mathf.Approximately(kvp.Key.g, color.g) && 
                                                      Mathf.Approximately(kvp.Key.b, color.b) && 

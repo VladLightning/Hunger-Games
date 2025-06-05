@@ -5,54 +5,67 @@ using UnityEngine;
 
 public class LeaderboardPresenter : MonoBehaviour
 {
-    [SerializeField] private LeaderboardView _leaderboardView;
-    
     [SerializeField] private Transform _leaderboardDisplay;
     [SerializeField] private TMP_Text _leaderboardTextPrefab;
     
-    private Dictionary<Color, int> _leaderboardElements = new Dictionary<Color, int>();
-    private Dictionary<Color, TMP_Text> _leaderboardElementsText = new Dictionary<Color, TMP_Text>();
-
+    private LeaderboardView _leaderboardView;
+    private Dictionary<string, LeaderboardData> _scores = new Dictionary<string, LeaderboardData>();
+    
     private void OnEnable()
     {
-        Cube.OnJoinLeaderboard += AddElementToLeaderboard;
         Cube.OnBoosterPickedUp += UpdateElementInLeaderboard;
+        CubeSpawner.OnStartSpawn += SpawnDisplays;
     }
 
     private void OnDisable()
     {
-        Cube.OnJoinLeaderboard -= AddElementToLeaderboard;
         Cube.OnBoosterPickedUp -= UpdateElementInLeaderboard;
+        CubeSpawner.OnStartSpawn -= SpawnDisplays;
     }
-
-    private void AddElementToLeaderboard(Color color, int value)
+    
+    private void UpdateElementInLeaderboard(Color color, string cubeName, int value)
     {
-        _leaderboardElements.Add(color, value);
+        _scores[cubeName].Score = value;
         
-        var text = Instantiate(_leaderboardTextPrefab, _leaderboardDisplay);
-        _leaderboardElementsText.Add(color, text);
-        
-        _leaderboardView.UpdateLeaderboardDisplay(_leaderboardElementsText[color], color, value);
-    }
-
-    private void UpdateElementInLeaderboard(Color color, int value)
-    {
-        _leaderboardElements[color] = value;
-        _leaderboardView.UpdateLeaderboardDisplay(_leaderboardElementsText[color], color, value);
-        
-        OrderLeaderboardPlaces();
-    }
-
-    private void OrderLeaderboardPlaces()
-    {
-        var order = _leaderboardElements.OrderByDescending(kvp => kvp.Value);
-        var colors = order.ToDictionary(kvp => kvp.Key, kvp => kvp.Value).Keys.ToList();
+        _scores = _scores.OrderByDescending(kvp => kvp.Value.Score).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         int index = 0;
-        foreach (var color in colors)
+        foreach (var score in _scores)
         {
-            _leaderboardElementsText[color].transform.SetSiblingIndex(index);
+            _leaderboardView.UpdateLeaderboardDisplay(score.Value.Color, score.Key, score.Value.Score, index);
             index++;
+        }
+    }
+
+    public void AddLeaderboardElement(Color color, string cubeName)
+    {
+        _scores.Add(cubeName, new LeaderboardData(color, 0));
+        
+        _leaderboardView.UpdateLeaderboardDisplay(color, cubeName, 0, _scores.Count - 1);
+    }
+
+    public void SpawnDisplays(int amount)
+    {
+        var texts = new TMP_Text[amount];
+        for (int i = 0; i < amount; i++)
+        {
+            texts[i] = Instantiate(_leaderboardTextPrefab, _leaderboardDisplay);
+        }
+        _leaderboardView = new LeaderboardView(texts);
+    }
+
+    private class LeaderboardData
+    {
+        private Color _color;
+        public Color Color => _color;
+        
+        private int _score;
+        public int Score { get => _score; set => _score = value; }
+
+        public LeaderboardData(Color color, int score)
+        {
+            _color = color;
+            _score = score;
         }
     }
 }

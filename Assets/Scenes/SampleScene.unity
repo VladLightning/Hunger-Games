@@ -5232,7 +5232,6 @@ GameObject:
   - component: {fileID: 1588368320}
   - component: {fileID: 1588368319}
   - component: {fileID: 1588368321}
-  - component: {fileID: 1588368322}
   m_Layer: 5
   m_Name: Leaderboard
   m_TagString: Untagged
@@ -5311,33 +5310,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a22093418964047ac0cf4a5774c532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leaderboardView: {fileID: 1588368322}
   _leaderboardDisplay: {fileID: 1963767584}
-  _leaderboardText: {fileID: 2412416267498957343, guid: 2df04dc43fdf6c242ba50449a7001cf8, type: 3}
---- !u!114 &1588368322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588368316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea6067ad2f6d6949a08f7601e705970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _colorNames:
-    _serializedList:
-    - Key: {r: 1, g: 0, b: 0, a: 1}
-      Value: Red
-    - Key: {r: 0, g: 0, b: 1, a: 1}
-      Value: Blue
-    - Key: {r: 0.5, g: 0, b: 0.66, a: 1}
-      Value: Purple
-    - Key: {r: 1, g: 1, b: 0, a: 1}
-      Value: Yellow
-    - Key: {r: 0, g: 1, b: 0, a: 1}
-      Value: Green
+  _leaderboardTextPrefab: {fileID: 2412416267498957343, guid: 2df04dc43fdf6c242ba50449a7001cf8, type: 3}
 --- !u!1001 &1594662158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7045,6 +7019,7 @@ MonoBehaviour:
   - {fileID: 185521121}
   - {fileID: 188686548}
   - {fileID: 2045618137}
+  _leaderboardPresenter: {fileID: 1588368321}
 --- !u!1 &2130469087
 GameObject:
   m_ObjectHideFlags: 0

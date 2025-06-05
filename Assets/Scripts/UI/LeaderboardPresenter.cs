@@ -14,13 +14,11 @@ public class LeaderboardPresenter : MonoBehaviour
     private void OnEnable()
     {
         Cube.OnBoosterPickedUp += UpdateElementInLeaderboard;
-        CubeSpawner.OnStartSpawn += SpawnDisplays;
     }
 
     private void OnDisable()
     {
         Cube.OnBoosterPickedUp -= UpdateElementInLeaderboard;
-        CubeSpawner.OnStartSpawn -= SpawnDisplays;
     }
     
     private void UpdateElementInLeaderboard(Color color, string cubeName, int value)

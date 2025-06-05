@@ -1,12 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
 {
-    public static event Action<int> OnStartSpawn;
     public static event Action OnEndSpawn;
 
     [SerializeField] private LeaderboardPresenter _leaderboardPresenter;
@@ -34,8 +31,8 @@ public class CubeSpawner : Spawner
 
     private IEnumerator Spawn()
     {
-        var takenSpawnPoints = RandomizeTakenSpawnPoints(_materials.Length);
-        var takenNames = RandomizeNames(_materials.Length);
+        var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_materials.Length);
+        var takenNames = RandomizeNonRepeatingListValues(_cubeNamesData.CubeNames.Count,_materials.Length);
         
         _leaderboardPresenter.SpawnDisplays(takenSpawnPoints.Count);
         
@@ -48,12 +45,5 @@ public class CubeSpawner : Spawner
         }
         
         OnEndSpawn?.Invoke();
-    }
-
-    private List<int> RandomizeNames(int amount)
-    {
-        var random = new System.Random();
-        var takenNames = Enumerable.Range(0, _cubeNamesData.CubeNames.Count).OrderBy(x => random.Next()).Take(amount).ToList();
-        return takenNames;
     }
 }

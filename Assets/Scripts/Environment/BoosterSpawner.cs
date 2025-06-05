@@ -25,7 +25,7 @@ public class BoosterSpawner : Spawner
 
     private IEnumerator Spawn()
     {
-        var takenSpawnPoints = RandomizeTakenSpawnPoints(_boostersToSpawnAmount);
+        var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_boostersToSpawnAmount);
 
         foreach (var spawnPoint in takenSpawnPoints)
         {

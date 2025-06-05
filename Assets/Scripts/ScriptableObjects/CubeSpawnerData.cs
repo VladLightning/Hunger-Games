@@ -7,4 +7,6 @@ public class CubeSpawnerData : SpawnerData
     public GameObject CubePrefab => _cubePrefab;
     [SerializeField] private Material[] _materials;
     public Material[] Materials => _materials;
+    [SerializeField] private CubeNamesData _cubeNamesData;
+    public CubeNamesData CubeNamesData => _cubeNamesData;
 }

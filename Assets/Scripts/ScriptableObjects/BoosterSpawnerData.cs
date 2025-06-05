@@ -1,6 +1,5 @@
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "BoosterSpawnerData", menuName = "Environment/Spawners/Booster Spawner")]
 public class BoosterSpawnerData : SpawnerData

@@ -18,10 +18,10 @@ public abstract class Spawner : MonoBehaviour
         Initialize();
     }
 
-    protected List<int> RandomizeTakenSpawnPoints(int amountToTake)
+    protected List<int> RandomizeNonRepeatingListValues(int upperLimit, int amountToTake)
     {
         var random = new System.Random();
-        var takenSpawnPoints = Enumerable.Range(0, _spawnPoints.Length).OrderBy(x => random.Next()).Take(amountToTake).ToList();
-        return takenSpawnPoints;
+        var takenValues = Enumerable.Range(0, upperLimit).OrderBy(x => random.Next()).Take(amountToTake).ToList();
+        return takenValues;
     }
 }

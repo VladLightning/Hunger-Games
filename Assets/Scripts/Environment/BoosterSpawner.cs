@@ -1,37 +1,48 @@
-using System.Collections;
+using System;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BoosterSpawner : Spawner
 {
+    public static event Action<int> OnEndBoosterSpawn;
     private SerializedDictionary<GameObject, int> _boosters;
     private int _boostersToSpawnAmount;
-
+    
     protected override void Initialize()
     {
-        base.Initialize();
-        
         var boosterSpawnerData = _spawnerData as BoosterSpawnerData;
         
         _boosters = boosterSpawnerData.Boosters;
         _boostersToSpawnAmount = boosterSpawnerData.BoostersToSpawn;
     }
-    
-    private void Start()
+
+    private void OnEnable()
     {
-        StartCoroutine(Spawn());
+        RoundSystem.OnRoundEnd += Spawn;
     }
 
-    private IEnumerator Spawn()
+    private void OnDisable()
+    {
+        RoundSystem.OnRoundEnd -= Spawn;
+    }
+
+    private void Start()
+    {
+        Spawn();
+    }
+
+    private void Spawn()
     {
         var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_boostersToSpawnAmount);
 
         foreach (var spawnPoint in takenSpawnPoints)
         {
-            yield return new WaitForSeconds(_spawnDelay);
             Instantiate(GetRandomBooster(), _spawnPoints[spawnPoint].position, _spawnPoints[spawnPoint].rotation);
         }
+
+        OnEndBoosterSpawn?.Invoke(_boostersToSpawnAmount);
     }
 
     private GameObject GetRandomBooster()

@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
 {
-    public static event Action OnEndSpawn;
+    public static event Action OnEndPlacement;
 
     [SerializeField] private LeaderboardPresenter _leaderboardPresenter;
     
@@ -13,37 +14,80 @@ public class CubeSpawner : Spawner
     
     private CubeNamesData _cubeNamesData;
     
+    private List<GameObject> _onFieldCubes = new List<GameObject>();
+    
+    private float _placementDelay;
+    
     protected override void Initialize()
     {
-        base.Initialize();
-        
         var cubeSpawnerData = _spawnerData as CubeSpawnerData;
         
         _cubePrefab = cubeSpawnerData.CubePrefab;
         _materials = cubeSpawnerData.Materials;
         _cubeNamesData = cubeSpawnerData.CubeNamesData;
-    }
-    
-    private void Start()
-    {
-        StartCoroutine(Spawn());
+        _placementDelay = cubeSpawnerData.PlacementDelay;
     }
 
-    private IEnumerator Spawn()
+    private void OnEnable()
     {
-        var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_materials.Length);
+        RoundSystem.OnRoundEnd += StartSetCubePositions;
+    }
+
+    private void OnDisable()
+    {
+        RoundSystem.OnRoundEnd -= StartSetCubePositions;
+    }
+
+    private void Start()
+    {
+        Spawn();
+    }
+
+    private void Spawn()
+    {
         var takenNames = RandomizeNonRepeatingListValues(_cubeNamesData.CubeNames.Count,_materials.Length);
         
-        _leaderboardPresenter.SpawnDisplays(takenSpawnPoints.Count);
+        _leaderboardPresenter.SpawnDisplays(takenNames.Count);
         
-        for(int i = 0; i < takenSpawnPoints.Count; i++)
+        for(int i = 0; i < takenNames.Count; i++)
         {
-            yield return new WaitForSeconds(_spawnDelay);
-            var cube = Instantiate(_cubePrefab, _spawnPoints[takenSpawnPoints[i]].position, _spawnPoints[takenSpawnPoints[i]].rotation).GetComponent<Cube>();
-            _leaderboardPresenter.AddLeaderboardElement(_materials[i].color, _cubeNamesData.CubeNames[takenNames[i]]);
-            cube.Initialize(_materials[i], _cubeNamesData.CubeNames[takenNames[i]],i+1);
+            ExecuteSpawn(i, _cubeNamesData.CubeNames[takenNames[i]]);
+        }
+        StartSetCubePositions();
+    }
+
+    private void ExecuteSpawn(int index, string takenName)
+    {
+        var cube = Instantiate(_cubePrefab).GetComponent<Cube>();
+        _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, takenName);
+        cube.Initialize(_materials[index], takenName,index+1);
+        
+        _onFieldCubes.Add(cube.gameObject);
+    }
+
+    private void StartSetCubePositions()
+    {
+        StartCoroutine(SetCubePositions());
+    }
+
+    private IEnumerator SetCubePositions()
+    {
+        foreach (var onFieldCube in _onFieldCubes)
+        {
+            onFieldCube.SetActive(false);
         }
         
-        OnEndSpawn?.Invoke();
+        var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_materials.Length);
+        
+        int index = 0;
+        foreach (var cube in _onFieldCubes)
+        {
+            yield return new WaitForSeconds(_placementDelay);
+            cube.transform.position = _spawnPoints[takenSpawnPoints[index]].position;
+            cube.transform.rotation = Quaternion.identity;
+            cube.SetActive(true);
+            index++;
+        }
+        OnEndPlacement?.Invoke();
     }
 }

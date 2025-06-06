@@ -7,11 +7,8 @@ public abstract class Spawner : MonoBehaviour
 {
     [SerializeField] protected SpawnerData _spawnerData;
     [SerializeField] protected Transform[] _spawnPoints;
-    protected float _spawnDelay;
-    protected virtual void Initialize()
-    {
-        _spawnDelay = _spawnerData.SpawnDelay;
-    }
+
+    protected abstract void Initialize();
     
     private void Awake()
     {

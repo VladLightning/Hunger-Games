@@ -51,16 +51,16 @@ public class CubeSpawner : Spawner
         
         for(int i = 0; i < takenNames.Count; i++)
         {
-            ExecuteSpawn(i, takenNames);
+            ExecuteSpawn(i, _cubeNamesData.CubeNames[takenNames[i]]);
         }
         StartSetCubePositions();
     }
 
-    private void ExecuteSpawn(int index, List<int> takenNames)
+    private void ExecuteSpawn(int index, string takenName)
     {
         var cube = Instantiate(_cubePrefab).GetComponent<Cube>();
-        _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, _cubeNamesData.CubeNames[takenNames[index]]);
-        cube.Initialize(_materials[index], _cubeNamesData.CubeNames[takenNames[index]],index+1);
+        _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, takenName);
+        cube.Initialize(_materials[index], takenName,index+1);
         
         _onFieldCubes.Add(cube.gameObject);
     }

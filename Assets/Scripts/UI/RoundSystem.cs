@@ -6,9 +6,7 @@ public class RoundSystem : MonoBehaviour
 {
     public static event Action OnRoundStart;
     public static event Action OnRoundEnd;
-
-    public static event Action OnEliminatedLastPlace;
-
+    public static event Action OnEliminateLastPlace;
     public static event Func<bool> OnOneCubeLeft;
 
     private readonly float _roundRestartDelay = 3f;
@@ -53,7 +51,7 @@ public class RoundSystem : MonoBehaviour
         _boostersOnField--;
         if (_boostersOnField <= 0)
         {
-            OnEliminatedLastPlace?.Invoke();
+            OnEliminateLastPlace?.Invoke();
             
             if (CheckGameEnded())
             {

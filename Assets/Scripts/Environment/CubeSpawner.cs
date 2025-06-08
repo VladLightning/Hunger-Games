@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CubeSpawner : Spawner
@@ -14,7 +15,7 @@ public class CubeSpawner : Spawner
     
     private CubeNamesData _cubeNamesData;
     
-    private Dictionary<string,GameObject> _onFieldCubes = new Dictionary<string, GameObject>();
+    private Dictionary<GameObject, int> _onFieldCubes = new Dictionary<GameObject, int>();
     
     private float _placementDelay;
     
@@ -31,15 +32,17 @@ public class CubeSpawner : Spawner
     private void OnEnable()
     {
         RoundSystem.OnRoundEnd += StartSetCubePositions;
+        RoundSystem.OnEliminateLastPlace += EliminateLastPlace;
         RoundSystem.OnOneCubeLeft += CheckIsOneCubeLeft;
-        LeaderboardPresenter.OnEliminateLastPlace += EliminateCube;
+        Cube.OnScoreChanged += UpdateCubeScore;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnRoundEnd -= StartSetCubePositions;
+        RoundSystem.OnEliminateLastPlace -= EliminateLastPlace;
         RoundSystem.OnOneCubeLeft -= CheckIsOneCubeLeft;
-        LeaderboardPresenter.OnEliminateLastPlace -= EliminateCube;
+        Cube.OnScoreChanged -= UpdateCubeScore;
     }
 
     private void Start()
@@ -66,7 +69,7 @@ public class CubeSpawner : Spawner
         _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, takenName);
         cube.Initialize(_materials[index], takenName,index+1);
         
-        _onFieldCubes.Add(takenName,cube.gameObject);
+        _onFieldCubes.Add(cube.gameObject, 0);
     }
 
     private void StartSetCubePositions()
@@ -76,7 +79,7 @@ public class CubeSpawner : Spawner
 
     private IEnumerator SetCubePositions()
     {
-        foreach (var onFieldCube in _onFieldCubes.Values)
+        foreach (var onFieldCube in _onFieldCubes.Keys)
         {
             onFieldCube.SetActive(false);
         }
@@ -84,7 +87,7 @@ public class CubeSpawner : Spawner
         var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_materials.Length);
         
         int index = 0;
-        foreach (var cube in _onFieldCubes.Values)
+        foreach (var cube in _onFieldCubes.Keys)
         {
             yield return new WaitForSeconds(_placementDelay);
             cube.transform.position = _spawnPoints[takenSpawnPoints[index]].position;
@@ -94,15 +97,23 @@ public class CubeSpawner : Spawner
         }
         OnEndPlacement?.Invoke();
     }
+    
+    private void UpdateCubeScore(GameObject cube, int score)
+    {
+        _onFieldCubes[cube] = score;
+    }
+    
+    private void EliminateLastPlace()
+    {
+        var lastPlaceCube = _onFieldCubes.OrderByDescending(x => x.Value).Last().Key;
+        
+        _onFieldCubes.Remove(lastPlaceCube);
+        
+        lastPlaceCube.GetComponent<Cube>().DestroyCube();
+    }
 
     private bool CheckIsOneCubeLeft()
     {
         return _onFieldCubes.Count == 1;
-    }
-    
-    private void EliminateCube(string cubeName)
-    {
-        _onFieldCubes[cubeName].GetComponent<Cube>().DestroyCube();
-        _onFieldCubes.Remove(cubeName);
     }
 }

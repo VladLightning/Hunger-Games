@@ -16,7 +16,7 @@ public class Cube : MonoBehaviour
     private Transform _currentTarget;
 
     private Color _ownColor;
-    private int _boostersPickedUp;
+    private int _boostersPickedUpTotal;
 
     private string _cubeName;
 
@@ -35,8 +35,8 @@ public class Cube : MonoBehaviour
         if (other.CompareTag("Booster"))
         {
             other.GetComponent<Booster>().ApplyBooster();
-            _boostersPickedUp++;
-            OnBoosterPickedUp?.Invoke(_ownColor, _cubeName, _boostersPickedUp);
+            _boostersPickedUpTotal++;
+            OnBoosterPickedUp?.Invoke(_ownColor, _cubeName, _boostersPickedUpTotal);
         }
     }
 
@@ -117,5 +117,10 @@ public class Cube : MonoBehaviour
             
             _agent.SetDestination(_currentTarget.position);
         }
+    }
+
+    public void DestroyCube()
+    {
+        Destroy(gameObject);
     }
 }

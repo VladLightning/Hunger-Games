@@ -14,7 +14,7 @@ public class CubeSpawner : Spawner
     
     private CubeNamesData _cubeNamesData;
     
-    private List<GameObject> _onFieldCubes = new List<GameObject>();
+    private Dictionary<string,GameObject> _onFieldCubes = new Dictionary<string, GameObject>();
     
     private float _placementDelay;
     
@@ -31,11 +31,15 @@ public class CubeSpawner : Spawner
     private void OnEnable()
     {
         RoundSystem.OnRoundEnd += StartSetCubePositions;
+        RoundSystem.OnOneCubeLeft += CheckIsOneCubeLeft;
+        LeaderboardPresenter.OnEliminateLastPlace += EliminateCube;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnRoundEnd -= StartSetCubePositions;
+        RoundSystem.OnOneCubeLeft -= CheckIsOneCubeLeft;
+        LeaderboardPresenter.OnEliminateLastPlace -= EliminateCube;
     }
 
     private void Start()
@@ -62,7 +66,7 @@ public class CubeSpawner : Spawner
         _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, takenName);
         cube.Initialize(_materials[index], takenName,index+1);
         
-        _onFieldCubes.Add(cube.gameObject);
+        _onFieldCubes.Add(takenName,cube.gameObject);
     }
 
     private void StartSetCubePositions()
@@ -72,7 +76,7 @@ public class CubeSpawner : Spawner
 
     private IEnumerator SetCubePositions()
     {
-        foreach (var onFieldCube in _onFieldCubes)
+        foreach (var onFieldCube in _onFieldCubes.Values)
         {
             onFieldCube.SetActive(false);
         }
@@ -80,7 +84,7 @@ public class CubeSpawner : Spawner
         var takenSpawnPoints = RandomizeNonRepeatingListValues(_spawnPoints.Length,_materials.Length);
         
         int index = 0;
-        foreach (var cube in _onFieldCubes)
+        foreach (var cube in _onFieldCubes.Values)
         {
             yield return new WaitForSeconds(_placementDelay);
             cube.transform.position = _spawnPoints[takenSpawnPoints[index]].position;
@@ -89,5 +93,16 @@ public class CubeSpawner : Spawner
             index++;
         }
         OnEndPlacement?.Invoke();
+    }
+
+    private bool CheckIsOneCubeLeft()
+    {
+        return _onFieldCubes.Count == 1;
+    }
+    
+    private void EliminateCube(string cubeName)
+    {
+        _onFieldCubes[cubeName].GetComponent<Cube>().DestroyCube();
+        _onFieldCubes.Remove(cubeName);
     }
 }

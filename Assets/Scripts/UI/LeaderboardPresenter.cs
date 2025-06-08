@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -5,6 +6,8 @@ using UnityEngine;
 
 public class LeaderboardPresenter : MonoBehaviour
 {
+    public static event Action<string> OnEliminateLastPlace;
+    
     [SerializeField] private Transform _leaderboardDisplay;
     [SerializeField] private TMP_Text _leaderboardTextPrefab;
     
@@ -14,15 +17,21 @@ public class LeaderboardPresenter : MonoBehaviour
     private void OnEnable()
     {
         Cube.OnBoosterPickedUp += UpdateElementInLeaderboard;
+        RoundSystem.OnEliminatedLastPlace += EliminateLastPlace;
     }
 
     private void OnDisable()
     {
         Cube.OnBoosterPickedUp -= UpdateElementInLeaderboard;
+        RoundSystem.OnEliminatedLastPlace -= EliminateLastPlace;
     }
     
     private void UpdateElementInLeaderboard(Color color, string cubeName, int value)
     {
+        if (!_scores.ContainsKey(cubeName))
+        {
+            return;
+        }
         _scores[cubeName].Score = value;
         
         _scores = _scores.OrderByDescending(kvp => kvp.Value.Score).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -50,6 +59,19 @@ public class LeaderboardPresenter : MonoBehaviour
             texts[i] = Instantiate(_leaderboardTextPrefab, _leaderboardDisplay);
         }
         _leaderboardView = new LeaderboardView(texts);
+    }
+
+    private string GetSmallestScoreCubeName()
+    {
+        return _scores.OrderByDescending(kvp => kvp.Value.Score).Last().Key;
+    }
+
+    private void EliminateLastPlace()
+    {
+        string lastPlaceName = GetSmallestScoreCubeName();
+        
+        OnEliminateLastPlace?.Invoke(lastPlaceName);
+        _scores.Remove(lastPlaceName);
     }
 
     private class LeaderboardData

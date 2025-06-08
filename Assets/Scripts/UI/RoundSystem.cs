@@ -7,6 +7,10 @@ public class RoundSystem : MonoBehaviour
     public static event Action OnRoundStart;
     public static event Action OnRoundEnd;
 
+    public static event Action OnEliminatedLastPlace;
+
+    public static event Func<bool> OnOneCubeLeft;
+
     private readonly float _roundRestartDelay = 3f;
     
     [SerializeField] private TimerPresenter _timerPresenter;
@@ -49,12 +53,30 @@ public class RoundSystem : MonoBehaviour
         _boostersOnField--;
         if (_boostersOnField <= 0)
         {
-           StartCoroutine(RoundRestart());
+            OnEliminatedLastPlace?.Invoke();
+            
+            if (CheckGameEnded())
+            {
+                GameEnd();
+                return;
+            }
+            
+            StartCoroutine(RoundRestart());
         }
     }
 
     private void SetOnFieldBoostersAmount(int amount)
     {
         _boostersOnField = amount;
+    }
+
+    private bool CheckGameEnded()
+    {
+        return OnOneCubeLeft?.Invoke() ?? false;
+    }
+
+    private void GameEnd()
+    {
+        Debug.Log("Game Ended");
     }
 }

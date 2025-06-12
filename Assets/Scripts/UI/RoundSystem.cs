@@ -46,7 +46,7 @@ public class RoundSystem : MonoBehaviour
         OnRoundEnd?.Invoke();
     }
     
-    private void DecreaseOnFieldBoostersAmount(Color color, string text, int number)
+    private void DecreaseOnFieldBoostersAmount(GameObject cube, Color color, string text, int number)
     {
         _boostersOnField--;
         if (_boostersOnField <= 0)

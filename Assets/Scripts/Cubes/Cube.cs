@@ -6,8 +6,7 @@ using UnityEngine.AI;
 
 public class Cube : MonoBehaviour
 {
-    public static event Action<Color, string, int> OnBoosterPickedUp;
-    public static event Action<GameObject, int> OnScoreChanged;
+    public static event Action<GameObject, Color, string, int> OnBoosterPickedUp;
     
     private readonly int _radius = 100;
     [SerializeField] private LayerMask _layerMask;
@@ -37,8 +36,7 @@ public class Cube : MonoBehaviour
         {
             other.GetComponent<Booster>().ApplyBooster();
             _boostersPickedUpTotal++;
-            OnScoreChanged?.Invoke(gameObject, _boostersPickedUpTotal);
-            OnBoosterPickedUp?.Invoke(_ownColor, _cubeName, _boostersPickedUpTotal);
+            OnBoosterPickedUp?.Invoke(gameObject, _ownColor, _cubeName, _boostersPickedUpTotal);
         }
     }
 

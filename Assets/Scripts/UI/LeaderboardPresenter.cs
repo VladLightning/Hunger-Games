@@ -15,29 +15,24 @@ public class LeaderboardPresenter : MonoBehaviour
     private void OnEnable()
     {
         RoundSystem.OnEliminateLastPlace += EliminateLastPlace;
-        RoundSystem.OnOneCubeLeft += CheckIsOneCubeLeft;
         Cube.OnBoosterPickedUp += UpdateElementInLeaderboard;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnEliminateLastPlace -= EliminateLastPlace;
-        RoundSystem.OnOneCubeLeft -= CheckIsOneCubeLeft;
         Cube.OnBoosterPickedUp -= UpdateElementInLeaderboard;
     }
     
-    private bool CheckIsOneCubeLeft()
-    {
-        return _scores.Count == 1;
-    }
-    
-    private void EliminateLastPlace()
+    private int EliminateLastPlace()
     {
         var lastPlaceCube = _scores.Last().Key;
         
         _scores.Remove(lastPlaceCube);
         
         lastPlaceCube.GetComponent<Cube>().DestroyCube();
+        
+        return _scores.Count;
     }
     
     private void UpdateElementInLeaderboard(GameObject cube, Color color, string cubeName, int value)

@@ -31,11 +31,13 @@ public class CubeSpawner : Spawner
     private void OnEnable()
     {
         RoundSystem.OnRoundEnd += StartSetCubePositions;
+        Cube.OnDestroyCube += RemoveOnFieldCube;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnRoundEnd -= StartSetCubePositions;
+        Cube.OnDestroyCube -= RemoveOnFieldCube;
     }
 
     private void Start()
@@ -74,11 +76,6 @@ public class CubeSpawner : Spawner
     {
         foreach (var onFieldCube in _onFieldCubes)
         {
-            if (onFieldCube == null)
-            {
-                //todo remove null element
-                continue;
-            }
             onFieldCube.SetActive(false);
         }
         
@@ -87,11 +84,6 @@ public class CubeSpawner : Spawner
         int index = 0;
         foreach (var cube in _onFieldCubes)
         {
-            if (cube == null)
-            {
-                //todo remove null element
-                continue;
-            }
             yield return new WaitForSeconds(_placementDelay);
             cube.transform.position = _spawnPoints[takenSpawnPoints[index]].position;
             cube.transform.rotation = Quaternion.identity;
@@ -99,5 +91,10 @@ public class CubeSpawner : Spawner
             index++;
         }
         OnEndPlacement?.Invoke();
+    }
+
+    private void RemoveOnFieldCube(GameObject cube)
+    {
+        _onFieldCubes.Remove(cube);
     }
 }

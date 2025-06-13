@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -9,35 +10,52 @@ public class LeaderboardPresenter : MonoBehaviour
     [SerializeField] private TMP_Text _leaderboardTextPrefab;
     
     private LeaderboardView _leaderboardView;
-    private Dictionary<string, LeaderboardData> _scores = new Dictionary<string, LeaderboardData>();
+    private Dictionary<GameObject, LeaderboardData> _scores = new Dictionary<GameObject, LeaderboardData>();
     
     private void OnEnable()
     {
+        RoundSystem.OnEliminateLastPlace += EliminateLastPlace;
         Cube.OnBoosterPickedUp += UpdateElementInLeaderboard;
     }
 
     private void OnDisable()
     {
+        RoundSystem.OnEliminateLastPlace -= EliminateLastPlace;
         Cube.OnBoosterPickedUp -= UpdateElementInLeaderboard;
     }
     
-    private void UpdateElementInLeaderboard(Color color, string cubeName, int value)
+    private int EliminateLastPlace()
     {
-        _scores[cubeName].Score = value;
+        var lastPlaceCube = _scores.Last().Key;
+        
+        _scores.Remove(lastPlaceCube);
+        
+        lastPlaceCube.GetComponent<Cube>().DestroyCube();
+        
+        return _scores.Count;
+    }
+    
+    private void UpdateElementInLeaderboard(GameObject cube, Color color, string cubeName, int value)
+    {
+        if (!_scores.ContainsKey(cube))
+        {
+            throw new ArgumentException($"Dictionary {_scores} does not contain {cube}");
+        }
+        _scores[cube].Score = value;
         
         _scores = _scores.OrderByDescending(kvp => kvp.Value.Score).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
         int index = 0;
         foreach (var score in _scores)
         {
-            _leaderboardView.UpdateLeaderboardDisplay(score.Value.Color, score.Key, score.Value.Score, index);
+            _leaderboardView.UpdateLeaderboardDisplay(score.Value.Color, score.Value.Name, score.Value.Score, index);
             index++;
         }
     }
 
-    public void AddLeaderboardElement(Color color, string cubeName)
+    public void AddLeaderboardElement(GameObject cube, Color color, string cubeName)
     {
-        _scores.Add(cubeName, new LeaderboardData(color, 0));
+        _scores.Add(cube, new LeaderboardData(color, cubeName,0));
         
         _leaderboardView.UpdateLeaderboardDisplay(color, cubeName, 0, _scores.Count - 1);
     }
@@ -57,12 +75,16 @@ public class LeaderboardPresenter : MonoBehaviour
         private Color _color;
         public Color Color => _color;
         
+        private string _name;
+        public string Name => _name;
+        
         private int _score;
         public int Score { get => _score; set => _score = value; }
 
-        public LeaderboardData(Color color, int score)
+        public LeaderboardData(Color color, string cubeName, int score)
         {
             _color = color;
+            _name = cubeName;
             _score = score;
         }
     }

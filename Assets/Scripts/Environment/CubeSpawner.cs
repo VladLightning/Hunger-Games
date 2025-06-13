@@ -31,11 +31,13 @@ public class CubeSpawner : Spawner
     private void OnEnable()
     {
         RoundSystem.OnRoundEnd += StartSetCubePositions;
+        Cube.OnDestroyCube += RemoveOnFieldCube;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnRoundEnd -= StartSetCubePositions;
+        Cube.OnDestroyCube -= RemoveOnFieldCube;
     }
 
     private void Start()
@@ -59,7 +61,7 @@ public class CubeSpawner : Spawner
     private void ExecuteSpawn(int index, string takenName)
     {
         var cube = Instantiate(_cubePrefab).GetComponent<Cube>();
-        _leaderboardPresenter.AddLeaderboardElement(_materials[index].color, takenName);
+        _leaderboardPresenter.AddLeaderboardElement(cube.gameObject, _materials[index].color, takenName);
         cube.Initialize(_materials[index], takenName,index+1);
         
         _onFieldCubes.Add(cube.gameObject);
@@ -89,5 +91,10 @@ public class CubeSpawner : Spawner
             index++;
         }
         OnEndPlacement?.Invoke();
+    }
+
+    private void RemoveOnFieldCube(GameObject cube)
+    {
+        _onFieldCubes.Remove(cube);
     }
 }

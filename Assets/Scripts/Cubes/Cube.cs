@@ -17,7 +17,7 @@ public class Cube : MonoBehaviour
     private Transform _currentTarget;
 
     private Color _ownColor;
-    private int _boostersPickedUpTotal;
+    private int _boostersPickedUpScore;
 
     private string _cubeName;
 
@@ -35,9 +35,8 @@ public class Cube : MonoBehaviour
     {
         if (other.CompareTag("Booster"))
         {
-            other.GetComponent<Booster>().ApplyBooster();
-            _boostersPickedUpTotal++;
-            OnBoosterPickedUp?.Invoke(gameObject, _ownColor, _cubeName, _boostersPickedUpTotal);
+            _boostersPickedUpScore += other.GetComponent<Booster>().ApplyBooster();
+            OnBoosterPickedUp?.Invoke(gameObject, _ownColor, _cubeName, _boostersPickedUpScore);
         }
     }
 

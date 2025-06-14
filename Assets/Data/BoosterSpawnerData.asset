@@ -12,17 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb30e6d703be9b47b40116082f0d041, type: 3}
   m_Name: BoosterSpawnerData
   m_EditorClassIdentifier: 
-  _spawnDelay: 0
   _boosters:
     _serializedList:
+    - Key: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
+      Value: 20
     - Key: {fileID: 7983663649950436102, guid: ed198009792bcba4791451697a2cba48, type: 3}
-      Value: 3
-    - Key: {fileID: 7983663649950436102, guid: 211bc771e5ecd264fb3c74d757d966e4, type: 3}
-      Value: 10
-    - Key: {fileID: 7983663649950436102, guid: 7f6d1a91cb4a8a44d9e312bf376ff78c, type: 3}
       Value: 20
-    - Key: {fileID: 7983663649950436102, guid: 91cb543c5ea65ba428e40a8c22c74e47, type: 3}
-      Value: 20
-    - Key: {fileID: 7983663649950436102, guid: f1e2ba9ae038e334c819689711a2bd4c, type: 3}
-      Value: 15
   _boostersToSpawn: 10

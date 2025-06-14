@@ -8,9 +8,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 199176867647834927, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
+      propertyPath: _boosterData
+      value: 
+      objectReference: {fileID: 11400000, guid: 152ab24d1b0729447969e216b9e530d3, type: 2}
     - target: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_Name
-      value: AttemptBooster
+      value: ExtraScoreBooster
       objectReference: {fileID: 0}
     - target: {fileID: 3340506339896989377, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_LocalPosition.x

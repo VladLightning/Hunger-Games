@@ -117,9 +117,9 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void DestroyCube()
+    public void DisableCube()
     {
         OnDestroyCube?.Invoke(gameObject);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

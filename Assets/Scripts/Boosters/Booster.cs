@@ -23,10 +23,15 @@ public class Booster : MonoBehaviour
     {
         cubeScore += _score;
         OnBoosterPickedUp?.Invoke(cubeTrigger.gameObject, cubeColor, cubeName, cubeScore);
-        BoosterLogic(cubeTrigger);
+        BoosterEffect(cubeTrigger);
     }
 
-    protected virtual void BoosterLogic(Cube cubeTrigger)
+    protected virtual void BoosterEffect(Cube cubeTrigger)
+    {
+        Dispose();
+    }
+
+    private void Dispose()
     {
         Destroy(gameObject);
     }

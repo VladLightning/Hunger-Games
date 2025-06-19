@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DestroyChanceBoosterData
   m_EditorClassIdentifier: 
   _score: 5
-  _destroyChance: 1
+  _destroyChance: 0.2

@@ -31,12 +31,14 @@ public class CubeSpawner : Spawner
     private void OnEnable()
     {
         RoundSystem.OnRoundEnd += StartSetCubePositions;
+        RoundSystem.OnCheckOnFieldCubesAmount += GetOnFieldCubesAmount;
         Cube.OnDestroyCube += RemoveOnFieldCube;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnRoundEnd -= StartSetCubePositions;
+        RoundSystem.OnCheckOnFieldCubesAmount -= GetOnFieldCubesAmount;
         Cube.OnDestroyCube -= RemoveOnFieldCube;
     }
 
@@ -96,5 +98,10 @@ public class CubeSpawner : Spawner
     private void RemoveOnFieldCube(GameObject cube)
     {
         _onFieldCubes.Remove(cube);
+    }
+
+    private int GetOnFieldCubesAmount()
+    {
+        return _onFieldCubes.Count;
     }
 }

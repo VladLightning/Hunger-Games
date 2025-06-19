@@ -14,12 +14,12 @@ public class DestroyChanceBooster : Booster
         _destroyChance = destroyChanceBoosterData.DestroyChance;
     }
 
-    protected override void BoosterLogic(Cube cubeTrigger)
+    protected override void BoosterEffect(Cube cubeTrigger)
     {
         if (_destroyChance >= Random.value)
         {
-            cubeTrigger.DestroyCube();
+            cubeTrigger.DisableCube();
         }
-        base.BoosterLogic(cubeTrigger);
+        base.BoosterEffect(cubeTrigger);
     }
 }

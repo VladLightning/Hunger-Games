@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class Cube : MonoBehaviour
 {
-    public static event Action<GameObject, Color, string, int> OnBoosterPickedUp;
     public static event Action<GameObject> OnDestroyCube;
     
     private readonly int _radius = 100;
@@ -35,8 +34,7 @@ public class Cube : MonoBehaviour
     {
         if (other.CompareTag("Booster"))
         {
-            _boostersPickedUpScore += other.GetComponent<Booster>().ApplyBooster();
-            OnBoosterPickedUp?.Invoke(gameObject, _ownColor, _cubeName, _boostersPickedUpScore);
+            other.GetComponent<Booster>().ApplyBooster(this, _ownColor, _cubeName, ref _boostersPickedUpScore);
         }
     }
 

@@ -18,14 +18,14 @@ public class RoundSystem : MonoBehaviour
     {
         CubeSpawner.OnEndPlacement += StartRound;
         BoosterSpawner.OnEndBoosterSpawn += SetOnFieldBoostersAmount;
-        Cube.OnBoosterPickedUp += DecreaseOnFieldBoostersAmount;
+        Booster.OnBoosterPickedUp += DecreaseOnFieldBoostersAmount;
     }
 
     private void OnDisable()
     {
         CubeSpawner.OnEndPlacement -= StartRound;
         BoosterSpawner.OnEndBoosterSpawn -= SetOnFieldBoostersAmount;
-        Cube.OnBoosterPickedUp -= DecreaseOnFieldBoostersAmount;
+        Booster.OnBoosterPickedUp -= DecreaseOnFieldBoostersAmount;
     }
 
     private void StartRound()

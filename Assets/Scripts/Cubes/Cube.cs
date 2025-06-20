@@ -17,6 +17,9 @@ public class Cube : MonoBehaviour
 
     private Color _ownColor;
     private int _boostersPickedUpScore;
+
+    private float _constantSpeed;
+    private float _temporarySpeed;
     
     private string _cubeName;
 
@@ -51,6 +54,7 @@ public class Cube : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _path = new NavMeshPath();
+        _constantSpeed = _agent.speed;
     }
 
     private Transform FindTarget()
@@ -89,6 +93,7 @@ public class Cube : MonoBehaviour
     private void StartMoving()
     {
         StartCoroutine(Move());
+        ResetTemporaryCubeSpeed();
     }
 
     private IEnumerator Move()
@@ -120,6 +125,19 @@ public class Cube : MonoBehaviour
     public void ChangeCubeSpeed(float speedCoefficient)
     {
         _agent.speed *= speedCoefficient;
+        _constantSpeed = _agent.speed;
+    }
+
+    public void SetTemporaryCubeSpeed(float speedCoefficient)
+    {
+        _temporarySpeed = _agent.speed * speedCoefficient;
+        _agent.speed = _temporarySpeed;
+    }
+
+    private void ResetTemporaryCubeSpeed()
+    {
+        _temporarySpeed = 0;
+        _agent.speed = _constantSpeed;
     }
 
     public void FreezeCube(float freezeDuration)

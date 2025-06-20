@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_Name
-      value: SizeBooster
+      value: CurrentRoundSpeedIncreaseBooster
       objectReference: {fileID: 0}
     - target: {fileID: 3340506339896989377, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -56,8 +56,30 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a637c98b4e0015344ab4600fefb043d2, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 199176867647834927, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1449534900202738365}
   m_SourcePrefab: {fileID: 100100000, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
+--- !u!1 &7983663649950436102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
+  m_PrefabInstance: {fileID: 7550832033685643895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-1449534900202738365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983663649950436102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c80a04b7b3c524b95b68ddb36683e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boosterData: {fileID: 11400000, guid: 81c304fc0d1ad0848a259fc42bc79ea4, type: 2}

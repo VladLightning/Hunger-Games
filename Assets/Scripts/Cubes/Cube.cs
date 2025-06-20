@@ -17,7 +17,7 @@ public class Cube : MonoBehaviour
 
     private Color _ownColor;
     private int _boostersPickedUpScore;
-
+    
     private string _cubeName;
 
     private void OnEnable()
@@ -120,6 +120,19 @@ public class Cube : MonoBehaviour
     public void ChangeCubeSpeed(float speedCoefficient)
     {
         _agent.speed *= speedCoefficient;
+    }
+
+    public void FreezeCube(float freezeDuration)
+    {
+        StartCoroutine(ExecuteFreezeCube(freezeDuration));
+    }
+
+    private IEnumerator ExecuteFreezeCube(float freezeDuration)
+    {
+        float currentSpeed = _agent.speed;
+        _agent.speed = 0;
+        yield return new WaitForSeconds(freezeDuration);
+        _agent.speed = currentSpeed;
     }
 
     public void DisableCube()

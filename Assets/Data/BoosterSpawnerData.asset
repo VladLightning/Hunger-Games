@@ -16,8 +16,6 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       Value: 20
-    - Key: {fileID: 7983663649950436102, guid: ed198009792bcba4791451697a2cba48, type: 3}
+    - Key: {fileID: 7983663649950436102, guid: 91cb543c5ea65ba428e40a8c22c74e47, type: 3}
       Value: 20
-    - Key: {fileID: 7983663649950436102, guid: f1e2ba9ae038e334c819689711a2bd4c, type: 3}
-      Value: 100
   _boostersToSpawn: 10

@@ -117,6 +117,11 @@ public class Cube : MonoBehaviour
         }
     }
 
+    public void ChangeCubeSpeed(float speedCoefficient)
+    {
+        _agent.speed *= speedCoefficient;
+    }
+
     public void DisableCube()
     {
         OnDestroyCube?.Invoke(gameObject);

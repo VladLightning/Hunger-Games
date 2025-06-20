@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 
 public class Booster : MonoBehaviour
 {
-    [SerializeField] private BoosterData _boosterData;
+    public static event Action<GameObject, Color, string, int> OnBoosterPickedUp;
     
-    private int _score;
+    [SerializeField] protected BoosterData _boosterData;
+    
+    protected int _score;
 
     private void Start()
     {
@@ -16,9 +19,20 @@ public class Booster : MonoBehaviour
         _score = _boosterData.Score;
     }
     
-    public virtual int ApplyBooster()
+    public void ApplyBooster(Cube cubeTrigger, Color cubeColor, string cubeName, ref int cubeScore)
+    {
+        cubeScore += _score;
+        OnBoosterPickedUp?.Invoke(cubeTrigger.gameObject, cubeColor, cubeName, cubeScore);
+        BoosterEffect(cubeTrigger);
+    }
+
+    protected virtual void BoosterEffect(Cube cubeTrigger)
+    {
+        Dispose();
+    }
+
+    private void Dispose()
     {
         Destroy(gameObject);
-        return _score;
     }
 }

@@ -6,7 +6,8 @@ public class RoundSystem : MonoBehaviour
 {
     public static event Action OnRoundStart;
     public static event Action OnRoundEnd;
-    public static event Func<int> OnEliminateLastPlace;
+    public static event Action OnEliminateLastPlace;
+    public static event Func<int> OnCheckOnFieldCubesAmount;
 
     private readonly float _roundRestartDelay = 3f;
     
@@ -18,14 +19,14 @@ public class RoundSystem : MonoBehaviour
     {
         CubeSpawner.OnEndPlacement += StartRound;
         BoosterSpawner.OnEndBoosterSpawn += SetOnFieldBoostersAmount;
-        Cube.OnBoosterPickedUp += DecreaseOnFieldBoostersAmount;
+        Booster.OnBoosterPickedUp += DecreaseOnFieldBoostersAmount;
     }
 
     private void OnDisable()
     {
         CubeSpawner.OnEndPlacement -= StartRound;
         BoosterSpawner.OnEndBoosterSpawn -= SetOnFieldBoostersAmount;
-        Cube.OnBoosterPickedUp -= DecreaseOnFieldBoostersAmount;
+        Booster.OnBoosterPickedUp -= DecreaseOnFieldBoostersAmount;
     }
 
     private void StartRound()
@@ -51,7 +52,8 @@ public class RoundSystem : MonoBehaviour
     private IEnumerator StartNewRound()
     {
         yield return new WaitForSeconds(_roundRestartDelay);
-        if (OnEliminateLastPlace?.Invoke() <= 1)
+        OnEliminateLastPlace?.Invoke();
+        if (OnCheckOnFieldCubesAmount?.Invoke() <= 1)
         {
             GameEnd();
             yield break;

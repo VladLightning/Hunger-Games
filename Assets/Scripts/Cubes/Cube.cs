@@ -140,17 +140,32 @@ public class Cube : MonoBehaviour
         _agent.speed = _constantSpeed;
     }
 
-    public void FreezeCube(float freezeDuration, float coefficient = 0)
+    public void SlowDownCube(float slowDownDuration, float coefficient = 0)
     {
-        StartCoroutine(ExecuteFreezeCube(freezeDuration, coefficient));
+        StartCoroutine(ExecuteSlowDownCube(slowDownDuration, coefficient));
     }
 
-    private IEnumerator ExecuteFreezeCube(float freezeDuration, float coefficient = 0)
+    private IEnumerator ExecuteSlowDownCube(float slowDownDuration, float coefficient = 0)
     {
-        float currentSpeed = _agent.speed;
-        _agent.speed *= coefficient;
-        yield return new WaitForSeconds(freezeDuration);
-        _agent.speed = currentSpeed;
+        if (coefficient == 0)
+        {
+            _agent.isStopped = true;
+        }
+        else
+        {
+            _agent.speed *= coefficient;
+        }
+        
+        yield return new WaitForSeconds(slowDownDuration);
+        
+        if (coefficient == 0)
+        {
+            _agent.isStopped = false;
+        }
+        else
+        {
+            _agent.speed *= 1 / coefficient;
+        }
     }
 
     public void DisableCube()

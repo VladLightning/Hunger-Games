@@ -6,6 +6,4 @@ public class SlowDownRandomCubeBoosterData : BoosterData
     public float SlowDownDuration => _slowDownDuration;
     [SerializeField] private float _slowDownCoefficient;
     public float SlowDownCoefficient => _slowDownCoefficient;
-    [SerializeField] private LayerMask _layerMask;
-    public LayerMask LayerMask => _layerMask;
 }

@@ -8,7 +8,6 @@ public class SlowDownRandomCubeBooster : Booster
     
     private float _slowDownDuration;
     private float _slowDownCoefficient;
-    private LayerMask _layerMask;
 
     protected override void Initialize()
     {
@@ -18,7 +17,6 @@ public class SlowDownRandomCubeBooster : Booster
         
         _slowDownDuration = slowDownRandomCubeBoosterData.SlowDownDuration;
         _slowDownCoefficient = slowDownRandomCubeBoosterData.SlowDownCoefficient;
-        _layerMask = slowDownRandomCubeBoosterData.LayerMask;
     }
 
     protected override void BoosterEffect(Cube cubeTrigger)
@@ -29,18 +27,16 @@ public class SlowDownRandomCubeBooster : Booster
 
     private void SlowDownRandomCube(Cube cubeTrigger)
     {
-        var cubes = Physics.OverlapSphere(transform.position, _boosterRange, _layerMask);
-        var activeCubes = new List<Cube>();
+        var cubes = Physics.OverlapSphere(transform.position, _boosterRange, LayerMask.GetMask("Cube"));
 
-        foreach (var cube in cubes)
+        for (int i = 1; i > 0; i++)
         {
-            var cubeComponent = cube.GetComponent<Cube>();
-            if (cube.gameObject.activeSelf && cubeComponent != cubeTrigger)
+            var randomCube = cubes[Random.Range(0, cubes.Length)].GetComponent<Cube>();
+            if (randomCube != cubeTrigger)
             {
-                activeCubes.Add(cubeComponent);
+                randomCube.SlowDownCube(_slowDownDuration, _slowDownCoefficient);
+                break;
             }
         }
-        
-        activeCubes[Random.Range(0, activeCubes.Count)].FreezeCube(_slowDownDuration ,_slowDownCoefficient);
     }
 }

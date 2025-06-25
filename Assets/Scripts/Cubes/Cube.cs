@@ -147,24 +147,22 @@ public class Cube : MonoBehaviour
 
     private IEnumerator ExecuteSlowDownCube(float slowDownDuration, float coefficient = 0)
     {
+        ApplySlowDownCoefficient(coefficient, true);
+        
+        yield return new WaitForSeconds(slowDownDuration);
+        
+        ApplySlowDownCoefficient(1/coefficient, false);
+    }
+
+    private void ApplySlowDownCoefficient(float coefficient, bool isStopped)
+    {
         if (coefficient == 0)
         {
-            _agent.isStopped = true;
+            _agent.isStopped = isStopped;
         }
         else
         {
             _agent.speed *= coefficient;
-        }
-        
-        yield return new WaitForSeconds(slowDownDuration);
-        
-        if (coefficient == 0)
-        {
-            _agent.isStopped = false;
-        }
-        else
-        {
-            _agent.speed *= 1 / coefficient;
         }
     }
 

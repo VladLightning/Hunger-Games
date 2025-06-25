@@ -29,7 +29,7 @@ public class SlowDownRandomCubeBooster : Booster
     {
         var cubes = Physics.OverlapSphere(transform.position, _boosterRange, LayerMask.GetMask("Cube"));
 
-        for (int i = 1; i > 0; i++)
+        while(true)
         {
             var randomCube = cubes[Random.Range(0, cubes.Length)].GetComponent<Cube>();
             if (randomCube != cubeTrigger)

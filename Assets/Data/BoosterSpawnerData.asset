@@ -16,14 +16,18 @@ MonoBehaviour:
     _serializedList:
     - Key: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       Value: 20
-    - Key: {fileID: 7983663649950436102, guid: ed198009792bcba4791451697a2cba48, type: 3}
+    - Key: {fileID: 7983663649950436102, guid: 211bc771e5ecd264fb3c74d757d966e4, type: 3}
       Value: 20
     - Key: {fileID: 7983663649950436102, guid: f1e2ba9ae038e334c819689711a2bd4c, type: 3}
       Value: 20
-    - Key: {fileID: 7983663649950436102, guid: 211bc771e5ecd264fb3c74d757d966e4, type: 3}
+    - Key: {fileID: 7983663649950436102, guid: ed198009792bcba4791451697a2cba48, type: 3}
       Value: 20
     - Key: {fileID: 7983663649950436102, guid: 7f6d1a91cb4a8a44d9e312bf376ff78c, type: 3}
       Value: 20
+    - Key: {fileID: 7983663649950436102, guid: 8d77b373df9fd404ea635b2799f059d9, type: 3}
+      Value: 20
     - Key: {fileID: 7983663649950436102, guid: 0feff3c13404c544c9b0a91afb90c161, type: 3}
+      Value: 20
+    - Key: {fileID: 7983663649950436102, guid: 91cb543c5ea65ba428e40a8c22c74e47, type: 3}
       Value: 20
   _boostersToSpawn: 10

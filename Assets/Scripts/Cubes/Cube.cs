@@ -147,11 +147,19 @@ public class Cube : MonoBehaviour
 
     private IEnumerator ExecuteSlowDownCube(float slowDownDuration, float coefficient = 0)
     {
+        if (coefficient == 0) //allows to stack freezes 
+        {
+            while (_agent.isStopped)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+        }
         ApplySlowDownCoefficient(coefficient, true);
         
         yield return new WaitForSeconds(slowDownDuration);
-        
-        ApplySlowDownCoefficient(1/coefficient, false);
+
+        float reverseCoefficient = coefficient == 0 ? 0 : 1 / coefficient; //prevents division by 0 in parameter transfer
+        ApplySlowDownCoefficient(reverseCoefficient, false);
     }
 
     private void ApplySlowDownCoefficient(float coefficient, bool isStopped)

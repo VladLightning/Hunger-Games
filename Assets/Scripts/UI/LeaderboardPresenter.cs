@@ -16,15 +16,26 @@ public class LeaderboardPresenter : MonoBehaviour
     {
         RoundSystem.OnEliminateLastPlace += EliminateLastPlace;
         Booster.OnBoosterPickedUp += UpdateElementInLeaderboard;
+
+        FreezeFirstOrLastBooster.OnFreezeFirstOrLast += GetLeaderboardPresenter;
     }
 
     private void OnDisable()
     {
         RoundSystem.OnEliminateLastPlace -= EliminateLastPlace;
         Booster.OnBoosterPickedUp -= UpdateElementInLeaderboard;
+        
+        FreezeFirstOrLastBooster.OnFreezeFirstOrLast -= GetLeaderboardPresenter;
     }
     
     private void EliminateLastPlace()
+    {
+        var lastPlaceCube = GetLastPlaceCube();
+
+        lastPlaceCube.GetComponent<Cube>().DisableCube();
+    }
+
+    private GameObject GetLastPlaceCube()
     {
         GameObject lastPlaceCube = null;
         
@@ -38,8 +49,8 @@ public class LeaderboardPresenter : MonoBehaviour
                 break;
             }
         }
-        
-        lastPlaceCube.GetComponent<Cube>().DisableCube();
+
+        return lastPlaceCube;
     }
 
     private void UpdateElementInLeaderboard(GameObject cube, Color color, string cubeName, int value)
@@ -75,6 +86,21 @@ public class LeaderboardPresenter : MonoBehaviour
             texts[i] = Instantiate(_leaderboardTextPrefab, _leaderboardDisplay);
         }
         _leaderboardView = new LeaderboardView(texts);
+    }
+
+    private LeaderboardPresenter GetLeaderboardPresenter()
+    {
+        return this;
+    }
+
+    public GameObject GetFirstPlace()
+    {
+        return _scores.First().Key;
+    }
+
+    public GameObject GetLastPlace()
+    {
+        return GetLastPlaceCube();
     }
 
     private class LeaderboardData

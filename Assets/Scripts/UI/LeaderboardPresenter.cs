@@ -18,7 +18,7 @@ public class LeaderboardPresenter : MonoBehaviour
         Booster.OnBoosterPickedUp += UpdateElementInLeaderboard;
 
         FreezeFirstOrLastBooster.OnFreezeFirst += GetFirstPlace;
-        FreezeFirstOrLastBooster.OnFreezeLast += GetLastPlace;
+        FreezeFirstOrLastBooster.OnFreezeLast += GetLastPlaceCube;
     }
 
     private void OnDisable()
@@ -27,7 +27,7 @@ public class LeaderboardPresenter : MonoBehaviour
         Booster.OnBoosterPickedUp -= UpdateElementInLeaderboard;
         
         FreezeFirstOrLastBooster.OnFreezeFirst -= GetFirstPlace;
-        FreezeFirstOrLastBooster.OnFreezeLast -= GetLastPlace;
+        FreezeFirstOrLastBooster.OnFreezeLast -= GetLastPlaceCube;
     }
     
     private void EliminateLastPlace()
@@ -90,14 +90,9 @@ public class LeaderboardPresenter : MonoBehaviour
         _leaderboardView = new LeaderboardView(texts);
     }
     
-    public GameObject GetFirstPlace()
+    private GameObject GetFirstPlace()
     {
         return _scores.First().Key;
-    }
-
-    public GameObject GetLastPlace()
-    {
-        return GetLastPlaceCube();
     }
 
     private class LeaderboardData

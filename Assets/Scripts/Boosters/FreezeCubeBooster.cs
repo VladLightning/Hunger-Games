@@ -14,7 +14,7 @@ public class FreezeCubeBooster : Booster
     
     protected override void BoosterEffect(Cube cubeTrigger)
     {
-        cubeTrigger.SlowDownCube(_freezeDuration);
+        cubeTrigger.FreezeCube(_freezeDuration);
         base.BoosterEffect(cubeTrigger);
     }
 }

@@ -30,6 +30,6 @@ public class FreezeFirstOrLastBooster : Booster
         var cubeToFreeze = Random.value <= 0.5 ? OnFreezeFirst?.Invoke().GetComponent<Cube>() 
             : OnFreezeLast?.Invoke().GetComponent<Cube>();
         
-        cubeToFreeze.SlowDownCube(_freezeDuration);
+        cubeToFreeze.FreezeCube(_freezeDuration);
     }
 }

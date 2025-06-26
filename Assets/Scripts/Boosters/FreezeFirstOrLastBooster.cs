@@ -1,11 +1,13 @@
 
 
 using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class FreezeFirstOrLastBooster : Booster
 {
-    public static event Func<LeaderboardPresenter> OnFreezeFirstOrLast;
+    public static event Func<GameObject> OnFreezeFirst;
+    public static event Func<GameObject> OnFreezeLast;
     private float _freezeDuration;
     
     protected override void Initialize()
@@ -25,9 +27,8 @@ public class FreezeFirstOrLastBooster : Booster
 
     private void FreezeFirstOrLast()
     {
-        var leaderboardPresenter = OnFreezeFirstOrLast?.Invoke();
-        var cubeToFreeze = Random.value <= 0.5 ? leaderboardPresenter.GetFirstPlace().GetComponent<Cube>() 
-            : leaderboardPresenter.GetLastPlace().GetComponent<Cube>();
+        var cubeToFreeze = Random.value <= 0.5 ? OnFreezeFirst?.Invoke().GetComponent<Cube>() 
+            : OnFreezeLast?.Invoke().GetComponent<Cube>();
         
         cubeToFreeze.SlowDownCube(_freezeDuration);
     }

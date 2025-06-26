@@ -20,6 +20,9 @@ public class Cube : MonoBehaviour
 
     private float _constantSpeed;
     private float _temporarySpeed;
+
+    private float _totalFreezeTime;
+    private bool _isFrozen;
     
     private string _cubeName;
 
@@ -140,30 +143,44 @@ public class Cube : MonoBehaviour
         _agent.speed = _constantSpeed;
     }
 
-    public void SlowDownCube(float slowDownDuration, float coefficient = 0)
+    public void SlowDownCube(float slowDownDuration, float coefficient)
     {
         StartCoroutine(ExecuteSlowDownCube(slowDownDuration, coefficient));
     }
 
-    private IEnumerator ExecuteSlowDownCube(float slowDownDuration, float coefficient = 0)
+    private IEnumerator ExecuteSlowDownCube(float slowDownDuration, float coefficient)
     {
-        ApplySlowDownCoefficient(coefficient, true);
+        _agent.speed *= coefficient;
         
         yield return new WaitForSeconds(slowDownDuration);
         
-        ApplySlowDownCoefficient(1/coefficient, false);
+        _agent.speed *= 1 / coefficient;
     }
 
-    private void ApplySlowDownCoefficient(float coefficient, bool isStopped)
+    public void FreezeCube(float freezeDuration)
     {
-        if (coefficient == 0)
+        _totalFreezeTime += freezeDuration;
+        if (!_isFrozen)
         {
-            _agent.isStopped = isStopped;
+            StartCoroutine(ExecuteFreezeCube());
         }
-        else
+    }
+
+    private IEnumerator ExecuteFreezeCube()
+    {
+        _isFrozen = true;
+        float timeFrozen = 0;
+        _agent.isStopped = true;
+        
+        while (_totalFreezeTime > timeFrozen)
         {
-            _agent.speed *= coefficient;
+            timeFrozen += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
+
+        _totalFreezeTime = 0;
+        _agent.isStopped = false;
+        _isFrozen = false;
     }
 
     public void DisableCube()

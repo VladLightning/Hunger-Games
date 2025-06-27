@@ -5,18 +5,15 @@ using UnityEngine;
 public class GameSpeedScalerModel
 {
     public static event Action<float> OnTimeScaleChanged;
-
-    private float _currentTimeScale = Time.timeScale;
-
+    
     public void ChangeTimeScale(float timeScaleChangeFactor)
     {
-        _currentTimeScale += timeScaleChangeFactor;
-        if (_currentTimeScale <= 1)
+        Time.timeScale += timeScaleChangeFactor;
+        if (Time.timeScale <= 1)
         {
-            _currentTimeScale = 1;
+            Time.timeScale = 1;
         }
-        Time.timeScale = _currentTimeScale;
-        OnTimeScaleChanged?.Invoke(_currentTimeScale);
+        OnTimeScaleChanged?.Invoke(Time.timeScale);
     }
 
     public void ResetTimeScale()

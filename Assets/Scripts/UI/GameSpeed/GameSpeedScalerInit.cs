@@ -5,7 +5,7 @@ public class GameSpeedScalerInit : MonoBehaviour
 {
     [SerializeField] private GameSpeedScalerView _gameSpeedScalerView;
     private GameSpeedScalerPresenter _gameSpeedScalerPresenter;
-
+    
     private void Start()
     {
         var gameSpeedScalerModel = new GameSpeedScalerModel();
@@ -14,6 +14,6 @@ public class GameSpeedScalerInit : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gameSpeedScalerPresenter.Unsubscribe();
+        _gameSpeedScalerPresenter.Dispose();
     }
 }

@@ -190,5 +190,11 @@ public class Cube : MonoBehaviour
         
         //Comment
         //Comment2
+
+        Debug.Log("Hello");
+        Debug.Log("Hello");
+        Debug.Log("Hello");
+        Debug.Log("Hello");
+        Debug.Log("Hello");
     }
 }

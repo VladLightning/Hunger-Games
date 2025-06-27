@@ -6,8 +6,7 @@ public class GameSpeedScalerModel
 {
     public static event Action<float> OnTimeScaleChanged;
 
-    private float _currentTimeScale = 1f;
-    public float CurrentTimeScale => _currentTimeScale;
+    private float _currentTimeScale = Time.timeScale;
 
     public void ChangeTimeScale(float timeScaleChangeFactor)
     {

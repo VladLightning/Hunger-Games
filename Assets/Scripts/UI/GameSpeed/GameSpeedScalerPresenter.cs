@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public class GameSpeedScalerPresenter
 {
     private readonly GameSpeedScalerView _gameSpeedScalerView;
@@ -9,7 +11,7 @@ public class GameSpeedScalerPresenter
         _gameSpeedScalerView = gameSpeedScalerView;
         _gameSpeedScalerModel = gameSpeedScalerModel;
 
-        _gameSpeedScalerView.UpdateTimeScaleDisplay(_gameSpeedScalerModel.CurrentTimeScale);
+        _gameSpeedScalerView.UpdateTimeScaleDisplay(Time.timeScale);
 
         GameSpeedScalerView.OnChangeTimeScale += ChangeTimeScale;
         GameSpeedScalerModel.OnTimeScaleChanged += UpdateTimeScale;

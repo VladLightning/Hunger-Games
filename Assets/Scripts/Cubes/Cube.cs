@@ -187,14 +187,5 @@ public class Cube : MonoBehaviour
     {
         OnDestroyCube?.Invoke(gameObject);
         gameObject.SetActive(false);
-        
-        //Comment
-        //Comment2
-
-        Debug.Log("Hello");
-        Debug.Log("Hello");
-        Debug.Log("Hello");
-        Debug.Log("Hello");
-        Debug.Log("Hello");
     }
 }

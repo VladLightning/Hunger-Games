@@ -25,10 +25,9 @@ public class DoubleBooster : Booster
 
     private void GetExtraBooster(Cube cubeTrigger, Color cubeColor, string cubeName, ref int cubeScore)
     {
-        var boostersOnField = Physics.OverlapSphere(transform.position, _boosterRange, LayerMask.GetMask("Booster"))
-            .ToList();
+        var boostersOnField = Physics.OverlapSphere(transform.position, _boosterRange, LayerMask.GetMask("Booster"));
 
-        if (boostersOnField.Count <= 1)
+        if (boostersOnField.Length <= 1)
         {
             _score = _noExtraBoosterFoundScore;
             return;

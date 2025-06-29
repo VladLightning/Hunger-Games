@@ -19,7 +19,7 @@ public class Booster : MonoBehaviour
         _score = _boosterData.Score;
     }
     
-    public void ApplyBooster(Cube cubeTrigger, Color cubeColor, string cubeName, ref int cubeScore)
+    public virtual void ApplyBooster(Cube cubeTrigger, Color cubeColor, string cubeName, ref int cubeScore)
     {
         cubeScore += _score;
         OnBoosterPickedUp?.Invoke(cubeTrigger.gameObject, cubeColor, cubeName, cubeScore);

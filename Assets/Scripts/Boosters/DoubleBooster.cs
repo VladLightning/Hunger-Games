@@ -19,6 +19,7 @@ public class DoubleBooster : Booster
 
     public override void ApplyBooster(Cube cubeTrigger, Color cubeColor, string cubeName, ref int cubeScore)
     {
+        _isPickedUp = true;
         GetExtraBooster(cubeTrigger, cubeColor, cubeName, ref cubeScore);
         base.ApplyBooster(cubeTrigger, cubeColor, cubeName, ref cubeScore);
     }
@@ -38,7 +39,7 @@ public class DoubleBooster : Booster
         foreach (var boosterCollider in boostersOnField)
         {
             var booster = boosterCollider.GetComponent<Booster>();
-            if (booster is not DoubleBooster)
+            if (!booster.IsPickedUp)
             {
                 possibleRandomBoosters.Add(booster);
             }

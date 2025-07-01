@@ -9,6 +9,9 @@ public class Booster : MonoBehaviour
     
     protected int _score;
 
+    protected bool _isPickedUp;
+    public bool IsPickedUp => _isPickedUp;
+
     private void Start()
     {
         Initialize();
@@ -23,6 +26,7 @@ public class Booster : MonoBehaviour
     {
         cubeScore += _score;
         OnBoosterPickedUp?.Invoke(cubeTrigger.gameObject, cubeColor, cubeName, cubeScore);
+        _isPickedUp = true;
         BoosterEffect(cubeTrigger);
     }
 

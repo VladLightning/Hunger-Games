@@ -107,6 +107,7 @@ public class Cube : MonoBehaviour
             
             if (_currentTarget != null)
             {
+                _agent.SetDestination(_currentTarget.position);
                 continue;
             }
             //Две задержки для того, чтобы raycast не смог сработать раньше уничтожения бустера
@@ -120,8 +121,6 @@ public class Cube : MonoBehaviour
                 _agent.isStopped = true;
                 yield break;
             }
-            
-            _agent.SetDestination(_currentTarget.position);
         }
     }
 

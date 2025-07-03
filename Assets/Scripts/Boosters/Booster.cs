@@ -18,7 +18,6 @@ public class Booster : MonoBehaviour
 
     private NavMeshAgent _agent;
     private Transform _currentTarget;
-    private Rigidbody _rigidbody;
 
     private void Start()
     {
@@ -28,7 +27,6 @@ public class Booster : MonoBehaviour
     protected virtual void Initialize()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _rigidbody = GetComponent<Rigidbody>();
         _score = _boosterData.Score;
     }
 
@@ -42,8 +40,6 @@ public class Booster : MonoBehaviour
         _currentTarget = target;
         _agent.speed = speed;
         
-        _rigidbody.isKinematic = true;
-        
         while (true)
         {
             yield return new WaitForFixedUpdate();
@@ -51,7 +47,6 @@ public class Booster : MonoBehaviour
             if (_currentTarget == null)
             {
                 _agent.isStopped = true;
-                _rigidbody.isKinematic = false;
                 yield break;
             }
             //Задержка для того, чтобы уже уничтоженный бустер не пытался задать себе путь,

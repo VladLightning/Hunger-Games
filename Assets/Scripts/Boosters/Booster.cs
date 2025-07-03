@@ -32,6 +32,11 @@ public class Booster : MonoBehaviour
 
     public void StartMoving(Transform target, float speed)
     {
+        if (_currentTarget != null)
+        {
+            _currentTarget = target;
+            return;
+        }
         StartCoroutine(Move(target, speed));
     }
 

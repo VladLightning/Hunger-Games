@@ -33,5 +33,5 @@ MonoBehaviour:
     - Key: {fileID: 7983663649950436102, guid: 80c9cb9ee042a114e90b231cd06974e0, type: 3}
       Value: 20
     - Key: {fileID: 7983663649950436102, guid: d308c847ae5b0da4996f0a7ae0eb9c93, type: 3}
-      Value: 300
+      Value: 20
   _boostersToSpawn: 10

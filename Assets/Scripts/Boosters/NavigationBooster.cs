@@ -54,11 +54,6 @@ public class NavigationBooster : Booster
             }
         }
         
-        if (possibleClosestBoosters.Count == 0)
-        { 
-            return null;
-        }
-        
         float shortestDistance = Mathf.Infinity;
         Transform closestBooster = null;
         

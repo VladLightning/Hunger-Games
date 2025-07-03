@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7742527323921435486}
   - component: {fileID: 698480143831529090}
   - component: {fileID: 199176867647834927}
+  - component: {fileID: 1640436497418039793}
   m_Layer: 7
   m_Name: Booster
   m_TagString: Booster
@@ -109,7 +110,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -147,3 +148,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boosterData: {fileID: 11400000, guid: 4686edb4c67fb3b4bab39605c5f2184a, type: 2}
+--- !u!195 &1640436497418039793
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433007954804320625}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.45
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

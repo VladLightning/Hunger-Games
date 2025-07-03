@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_Name
-      value: SpeedBooster 4
+      value: NavigationBooster
       objectReference: {fileID: 0}
     - target: {fileID: 3340506339896989377, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63,14 +63,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8736655804097076007}
+      addedObject: {fileID: 6110352835458089146}
   m_SourcePrefab: {fileID: 100100000, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
 --- !u!1 &7983663649950436102 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 433007954804320625, guid: 0d35b6246bb720049adc0f9dcbe356a7, type: 3}
   m_PrefabInstance: {fileID: 7550832033685643895}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8736655804097076007
+--- !u!114 &6110352835458089146
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7983663649950436102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2415d787c876e4e4d9e224ac93f188b9, type: 3}
+  m_Script: {fileID: 11500000, guid: d63e5a35d308c18478ca25d042dd3650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boosterData: {fileID: 11400000, guid: 0b512321725813d4882e6e249883d60b, type: 2}
+  _boosterData: {fileID: 11400000, guid: 44f53246d98da154c9d9d0659975ea6c, type: 2}

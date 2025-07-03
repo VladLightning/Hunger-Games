@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class Cube : MonoBehaviour
 {
     public static event Action<GameObject> OnDestroyCube;
+    public static event Action OnCheckGameEnd;
     
     private readonly int _radius = 100;
     [SerializeField] private LayerMask _layerMask;
@@ -185,6 +186,7 @@ public class Cube : MonoBehaviour
     public void DisableCube()
     {
         OnDestroyCube?.Invoke(gameObject);
+        OnCheckGameEnd?.Invoke();
         gameObject.SetActive(false);
     }
 }

@@ -84,8 +84,12 @@ public class RoundSystem : MonoBehaviour
     private void GameEnd()
     {
         var firstPlaceStats = OnGetFirstPlaceStats?.Invoke();
-        var cubeName = firstPlaceStats?.Name;
-        var cubeScore = firstPlaceStats?.Score;
+        if (firstPlaceStats == null)
+        {
+            throw new NullReferenceException("OnGetFirstPlaceStats returned null");
+        }
+        var cubeName = firstPlaceStats.Name;
+        var cubeScore = firstPlaceStats.Score;
         string gameEndMessage = $"Cube {cubeName} won with a total of {cubeScore} points";
         
         Debug.Log(gameEndMessage);

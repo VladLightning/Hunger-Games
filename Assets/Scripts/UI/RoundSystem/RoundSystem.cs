@@ -7,6 +7,7 @@ public class RoundSystem : MonoBehaviour
     public static event Action OnRoundStart;
     public static event Action OnRoundEnd;
     public static event Action OnEliminateLastPlace;
+    public static event Func<LeaderboardPresenter.LeaderboardData> OnGetFirstPlaceStats;
     public static event Func<int> OnCheckOnFieldCubesAmount;
 
     private readonly float _roundRestartDelay = 3f;
@@ -17,6 +18,8 @@ public class RoundSystem : MonoBehaviour
 
     private void OnEnable()
     {
+        Cube.OnCheckGameEnd += CheckGameEnd;
+        
         CubeSpawner.OnEndPlacement += StartRound;
         BoosterSpawner.OnEndBoosterSpawn += SetOnFieldBoostersAmount;
         Booster.OnBoosterPickedUp += DecreaseOnFieldBoostersAmount;
@@ -24,6 +27,8 @@ public class RoundSystem : MonoBehaviour
 
     private void OnDisable()
     {
+        Cube.OnCheckGameEnd -= CheckGameEnd;
+        
         CubeSpawner.OnEndPlacement -= StartRound;
         BoosterSpawner.OnEndBoosterSpawn -= SetOnFieldBoostersAmount;
         Booster.OnBoosterPickedUp -= DecreaseOnFieldBoostersAmount;
@@ -55,6 +60,7 @@ public class RoundSystem : MonoBehaviour
         OnEliminateLastPlace?.Invoke();
         if (OnCheckOnFieldCubesAmount?.Invoke() <= 1)
         {
+            OnEliminateLastPlace?.Invoke();
             GameEnd();
             yield break;
         }
@@ -66,9 +72,26 @@ public class RoundSystem : MonoBehaviour
     {
         _boostersOnField = amount;
     }
+
+    private void CheckGameEnd()
+    {
+        if (OnCheckOnFieldCubesAmount?.Invoke() == 0)
+        {
+            GameEnd();
+        }
+    }
     
     private void GameEnd()
     {
-        Debug.Log("Game Ended");
+        var firstPlaceStats = OnGetFirstPlaceStats?.Invoke();
+        if (firstPlaceStats == null)
+        {
+            throw new NullReferenceException("OnGetFirstPlaceStats returned null");
+        }
+        var cubeName = firstPlaceStats.Name;
+        var cubeScore = firstPlaceStats.Score;
+        string gameEndMessage = $"Cube {cubeName} won with a total of {cubeScore} points";
+        
+        Debug.Log(gameEndMessage);
     }
 }

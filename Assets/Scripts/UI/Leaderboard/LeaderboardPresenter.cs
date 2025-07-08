@@ -15,6 +15,7 @@ public class LeaderboardPresenter : MonoBehaviour
     private void OnEnable()
     {
         RoundSystem.OnEliminateLastPlace += EliminateLastPlace;
+        RoundSystem.OnGetFirstPlaceStats += GetFirstPlaceStats;
         Booster.OnBoosterPickedUp += UpdateElementInLeaderboard;
 
         FreezeFirstOrLastBooster.OnFreezeFirst += GetFirstPlace;
@@ -24,6 +25,7 @@ public class LeaderboardPresenter : MonoBehaviour
     private void OnDisable()
     {
         RoundSystem.OnEliminateLastPlace -= EliminateLastPlace;
+        RoundSystem.OnGetFirstPlaceStats -= GetFirstPlaceStats;
         Booster.OnBoosterPickedUp -= UpdateElementInLeaderboard;
         
         FreezeFirstOrLastBooster.OnFreezeFirst -= GetFirstPlace;
@@ -53,6 +55,16 @@ public class LeaderboardPresenter : MonoBehaviour
         }
 
         return lastPlaceCube;
+    }
+        
+    private GameObject GetFirstPlace()
+    {
+        return _scores.First().Key;
+    }
+    
+    private LeaderboardData GetFirstPlaceStats()
+    {
+        return _scores.First().Value;
     }
 
     private void UpdateElementInLeaderboard(GameObject cube, Color color, string cubeName, int value)
@@ -90,12 +102,7 @@ public class LeaderboardPresenter : MonoBehaviour
         _leaderboardView = new LeaderboardView(texts);
     }
     
-    private GameObject GetFirstPlace()
-    {
-        return _scores.First().Key;
-    }
-
-    private class LeaderboardData
+    public class LeaderboardData
     {
         private Color _color;
         public Color Color => _color;
